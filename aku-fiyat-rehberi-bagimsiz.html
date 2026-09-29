@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Akü Fiyat Rehberi</title>
+<style>
+:root{--bg:#eef1f5;--card:#fff;--ink:#14202b;--mut:#66758a;--line:#dbe1ea;--acc:#ffc21a;--accInk:#1a1400;--V:#2f6bff;--P:#12a150;--E:#e8590c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1720;--card:#172231;--ink:#eaf0f7;--mut:#8fa0b5;--line:#243247;--V:#6b96ff;--P:#3ecf7e;--E:#ff8a4c}}
+:root[data-theme="dark"]{--bg:#0f1720;--card:#172231;--ink:#eaf0f7;--mut:#8fa0b5;--line:#243247;--V:#6b96ff;--P:#3ecf7e;--E:#ff8a4c}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 Bahnschrift,"Segoe UI",system-ui,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+.w{max-width:1100px;margin:0 auto}
+h1{margin:0 0 10px;font-size:22px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+h1 i{width:26px;height:16px;border-radius:3px;background:var(--acc);position:relative;display:inline-block}
+h1 i:after{content:"";position:absolute;right:-4px;top:5px;width:3px;height:6px;border-radius:0 2px 2px 0;background:var(--acc)}
+.sr{display:flex;gap:8px}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;outline:none}
+input{flex:1;min-width:0}input:focus,select:focus,button:focus-visible{border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 40%,transparent)}
+.row{display:flex;gap:8px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}.row::-webkit-scrollbar{display:none}
+button{font:inherit;cursor:pointer;white-space:nowrap;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px}
+button.on{background:var(--acc);border-color:var(--acc);color:var(--accInk);font-weight:700}
+.br button{border-radius:10px}.br button.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.cnt{color:var(--mut);font-size:13px;padding:12px 16px 4px;max-width:1100px;margin:0 auto}
+main{max-width:1100px;margin:0 auto;padding:6px 16px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.c{background:var(--card);border-radius:16px;border:1px solid var(--line);padding:14px 14px 12px 18px;position:relative;overflow:hidden}
+.c:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--bc)}
+.t{display:flex;gap:12px;align-items:flex-start}
+.ah{min-width:52px;text-align:center;line-height:1}.ah b{font-size:30px;font-weight:700;letter-spacing:-.03em}.ah small{display:block;color:var(--mut);font-size:11px;margin-top:2px}
+.nm{flex:1;font-weight:600;font-size:14.5px;overflow-wrap:anywhere}
+.tg{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tg span{font-size:11.5px;padding:2px 8px;border-radius:6px;background:var(--bg);color:var(--mut)}
+.tg .b{background:var(--bc);color:#fff;font-weight:600}
+.pr{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;margin-top:12px}
+.pr div{background:var(--bg);border-radius:10px;padding:6px 8px}.pr small{display:block;font-size:10.5px;color:var(--mut)}
+.pr b{font-size:14px}.pr .m{background:var(--acc);color:var(--accInk)}.pr .m small{color:#4d3d00}.pr .m b{font-size:16px}
+.e{grid-column:1/-1;text-align:center;color:var(--mut);padding:50px 0}
+.ft{max-width:1100px;margin:0 auto;padding:0 16px 30px;color:var(--mut);font-size:12px}
+</style></head><body>
+<header><div class="w"><h1><i></i>Akü Fiyat Rehberi</h1>
+<div class="sr"><input id="q" type="search" placeholder="Ara: 60 (amper), model, kutu tipi, stok kodu…" autocomplete="off"><select id="s"><option value="ah">AH ↑</option><option value="ahd">AH ↓</option><option value="pr">Fiyat ↑</option><option value="prd">Fiyat ↓</option></select></div>
+<div class="row br" id="bb"></div><div class="row" id="cb"></div></div></header>
+<div class="cnt" id="n"></div><main id="g"></main>
+<div class="ft">Varta 14 Eylül 2026 ve Powergen fiyatları KDV dahildir. Esan 2026/02 (6.07.2026) toptan fiyatları KDV dahil değildir; depozito ayrıca gösterilir.</div>
+<script>
+const B={V:{n:"Varta",l:["KK/60G","Nakit","Özel"],m:1},P:{n:"Powergen",l:["Liste","Satış","10 a 1","Nakit"],m:3},E:{n:"Esan",l:["Toptan (KDV hariç)"],m:0}};
+const D={V:`50AH SILVER DYNAMIC AGM A9 H4/L1 CCA:540|50|9920|9126|8396|550901054
+60AH SILVER DYNAMIC AGM H5/L2 (D52-A8)|60|9580|8814|8109|560901068
+70AH SILVER DYNAMIC AGM L3/H6 (E39-A7)|70|11500|10580|9734|570901076
+80AH SILVER DYNAMIC AGM L4/H4 (F21-A6)|80|12275|11293|10390|580901080
+95AH SILVER DYNAMIC AGM L5/H8 (G14-A5)|95|14120|12990|11951|595901085
+105AH SILVER DYNAMIC AGM L6/H9 (H15-A4)|105|18350|16882|15531|605901095
+50AH BLUE DYNAMIC EFB N50 H4/L1 CCA:550|50|5085|4678|4304|550500055
+60AH BLUE DYNAMIC EFB L2/H5 (N60)|60|6100|5612|5163|560500064
+65AH BLUE DYNAMIC EFB D54 T6/LB3 CCA:650|65|6595|6067|5582|565500065
+65AH BLUE DYNAMIC EFB D23 (N65) CCA:650|65|6485|5966|5489|565501065
+72AH BLUE DYNAMIC EFB D26 (N72)|72|7500|6900|6348|572501076
+70AH BLUE DYNAMIC EFB L3/H6 (N70)|70|7120|6550|6026|570500076
+75AH BLUE DYNAMIC EFB LB4/T4 (E46)|75|6350|5842|5375|575500073
+80AH BLUE DYNAMIC EFB N80 H7/L4 CCA:800|80|8200|7544|6940|580500080
+95AH DYNAMIC EFB L5/H8 (N95)|95|8900|8188|7533|595500085
+40AH BLUE DYNAMIC A14 B19 CCA:330|40|4395|4043|3720|540126033
+45AH BLUE DYNAMIC B32 B24R CCA:330|45|4450|4094|3766|545156033
+45AH BLUE DYNAMIC B34 B24RS CCA:330|45|4450|4094|3766|545158033
+52AH BLUE DYNAMIC CCA:470 H4 (C22)|52|4195|3859|3551|552400047
+60AH BLUE DYNAMIC L2/H5 (D24)|60|4090|3763|3462|560408054
+70AH BLUE DYNAMIC CCA:630 D26 (E23)|70|6465|5948|5472|570412063
+72AH BLUE DYNAMIC T6/LB3 (E43)|72|5670|5216|4799|572409068
+74AH BLUE DYNAMIC L3/H6 (E11)|74|5680|5226|4808|574012068
+80AH BLUE DYNAMIC LB4/T7 (F17)|80|6695|6159|5667|580406074
+95AH BLUE PROMOTIVE G8 D31R CCA:830|95|7700|7084|6517|595405083
+95AH BLUE PROMOTIVE D31 (G7)|95|7700|7084|6517|595404083
+100AH SILVER DYNAMIC L5/H8 (H3)|100|8900|8188|7533|600402083
+105AH BLACK PROMOTIVE H17 GR31 CCA:800|105|9200|8464|7787|605102080
+110AH SILVER DYNAMIC CCA:920 L6 (I1)|110|10440|9605|8836|610402092
+120AH PROMOTIVE SLV CCA:680 TYPE:A|120|11650|10718|9861|620045068
+135AH BLACK PROMOTIVE CCA:100 (J10)|135|13300|12236|11257|635052100
+145AH SILVER PROMOTIVE TYPE A (K7)|145|14230|13092|12044|645400080
+180AH SILVER PROMOTIVE B TYPE (M18)|180|16400|15088|13881|680108100
+225AH SILVER PROMOTIVE C TYPE (N9)|225|20500|18860|17351|725103115
+190AH PROMOTIVE EFB B TYPE (B90)|190|21250|19550|17986|690500105
+240AH PROMOTIVE EFB C TYPE (C40)|240|24600|22632|20821|740500120
+210AH PROMOTIVE AGM C TYPE (A1)|210|28750|26450|24334|710901120`,
+P:`PG420 CCA:270 NS40|42|3540|2230.20|2027.45|1784.16
+PG500 CCA:390/420 L1|50|3860|2431.80|2210.73|1945.44
+PG501 CCA:430/460 LB1|50|3860|2431.80|2210.73|1945.44
+PG600 CCA:490/540 L2|60|3905|2460.15|2236.50|1968.12
+PG601 CCA:410 NS60|60|3740|2356.20|2142.00|1884.96
+PG603 CCA:500/540 LB2|60|3980|2507.40|2279.45|2005.92
+PG602 CCA:450/490 D23|60|5100|3213.00|2920.91|2570.40
+EFB PG630 CCA:600/630 L2|63|5760|3628.80|3382.79|2976.85
+EFB PG720 CCA:700/730 L3|72|6565|4135.95|3889.94|3423.14
+PG721 CCA:530/594 LB3 (alçak)|72|4995|3146.85|2900.84|2552.73
+ASIA PG722 CCA:540/600 N50|72|5425|3417.75|3171.74|2791.13
+EFB PG723 CCA:730/700 LB3 (alçak)|72|6945|4375.35|4129.34|3633.81
+PG724 CCA:540/600 N50 (Asia) TERS|72|5095|3209.85|2962.82|2608.17
+PG750 CCA:580/640 L3|75|4925|3102.75|2856.74|2513.93
+PG800 CCA:680/740 LB4|80|5850|3685.50|3439.49|3026.75
+EFB PG801 CCA:700/760 LB4|80|7805|4917.15|4671.14|4110.60
+EFB PG850 CCA:730/770 L4|85|7805|4917.15|4671.14|4110.60
+PG900 CCA:660/730 D31 (N70)|90|7260|4573.80|4327.79|3808.45
+PG901 CCA:660/730 D31 (N70) TERS|90|7260|4573.80|4327.79|3808.45
+PG1000 CCA:800/860 L5|100|7030|4428.90|4182.89|3680.94
+PG1050 CCA:720/760 H4|105|7310|4605.30|4186.64|3684.24
+PG1150 TRC CCA:760/800|115|8245|5194.35|4733.82|4165.76
+PG1350 CCA:800/850 A|135|10685|6731.55|6271.02|5518.50
+PG1500 CCA:950/900 B|150|12210|7692.30|7231.77|6363.96
+PG1650 CCA:1050/1000 B|165|12520|7887.60|7427.07|6535.82
+PG1800 CCA:1100/1150 B|180|14020|8832.60|8372.07|7367.42
+EFB PG1850 CCA:1200/1250 B|185|16950|10678.50|10217.97|8991.81
+PG2000 CCA:1150/1200 C|200|15180|9563.40|9102.87|8010.53
+PG2250 CCA:1150/1200 C|225|16975|10694.25|10233.72|9005.67
+EFB PG2350 CCA:1250/1300 C|235|21465|13522.95|13062.42|11494.93
+POWERGEN 240AH|240|18625|11733.75|11273.22|9920.43
+PG2500 CCA:1150/1200 C|250|19030|11988.90|11528.37|10144.97`,
+E:`12/60 AGM|9571|5.5|660|L2
+12/70 AGM|10578|5.5|760|L3
+12/80 AGM|11393|6|800|L4
+12/95 AGM|13331|6.5|900|L5
+12/210 AGM|29214|16.5|1200|C
+12/240 AGM|37079|16.5|1300|C
+12/63 EFB|5610|5|600|L2T
+12/72 EFB|6412|5.5|720|L3T
+12/84 EFB|7151|5.5|800|L4
+12/40 Dar Tip-TK-İnce Kutup R+|3690|3.5|270|NS40
+12/45 Dar Tip-TK-R+|3715|3.5|360|NS60
+12/45 Dar Tip-TK-R+ Tırnaklı|3715|3.5|360|NS60
+12/45 Dar Tip-TK-L+|3715|3.5|360|NS60
+12/55 Dar Tip-TK-R+|4006|4.5|460|NS60
+12/60 Dar Tip R+|4226|5|540|NS60
+12/60 Tam Kapalı R+|4226|5|540|D23
+12/70 Tam Kapalı R+|5219|5.5|600|N50
+12/70 Tam Kapalı L+|5219|5.5|600|N50
+12/100 Tam Kapalı L+|6923|8|800|N70
+12/50 Tam Kapalı R+|3515|4.5|420|L1BT
+12/60 Tam Kapalı R+|3944|5|540|L2T
+12/60 Tam Kapalı R+ Alçak Kutu|3944|5|540|L2BT
+12/60 Tam Kapalı R+ Ticari Taksi|4226|5|540|L2T
+12/62 Tam Kapalı R+|4516|5|550|L2T
+12/66 Tam Kapalı R+ Alçak Kutu|4947|5|590|L3B
+12/72 Tam Kapalı R+ Ticari Taksi|5490|5.5|640|L3B
+12/72 Tam Kapalı R+ Alçak Kutu|5010|5.5|640|LB3
+12/75 Tam Kapalı R+ Tırnaksız|5149|5.5|650|L3
+12/75 Tam Kapalı L+|5149|5.5|650|L3
+12/80 Tam Kapalı R+ Alçak Kutu|5682|6.5|700|L4BT
+12/88 Tam Kapalı R+|6388|6.5|720|L5
+12/90 Tam Kapalı R+|6536|8|720|N70
+12/90 TK-Ters Kutup L+|6578|8|720|N70
+12/92 TK-Tam Kapalı L+|6822|8|760|L4T
+12/100 Tam Kapalı R+|6990|8|800|L5BT
+12/100 Tam Kapalı R+ (174x350)|6990|8|800|L5
+12/102 Tam Kapalı R+|7477|8|800|L5
+12/105 Tam Kapalı R+|7541|9|760|H4
+12/60 Büşonlu R+|3944|5|540|L2
+12/75 Büşonlu R+|5265|5.5|650|L3
+12/88 Büşonlu R+|6591|6.5|720|L5
+12/90 Büşonlu R+|6480|8|720|N70
+12/105 Büşonlu R+|7459|9|760|H4
+12/110 Büşonlu R+|7763|9|780|D2A
+12/115 Büşonlu R+|7958|9|780|D2A
+12/120 Büşonlu R+|9381|10|850|AT
+12/120 D8 R+|9381|10|850|D8T
+12/125 Büşonlu R+ Tank|14096|9|800|D7
+12/128 Büşonlu R+|10103|10|860|D3
+12/135 Büşonlu R+|10320|11|950|AT
+12/135 D8 R+|10320|11|950|D8T
+12/150 Büşonlu R+|10886|12|1000|B
+12/150 Tam Kapalı R+|11000|12|1000|B
+12/165 Büşonlu R+|11702|13|1100|B
+12/165 Tam Kapalı R+|11816|13|1100|B
+12/180 Büşonlu R+|13105|14|1250|B
+12/180 Tam Kapalı R+|13218|14|1250|B
+12/200 Büşonlu R+ HD|15602|15|1200|D6
+12/200 Tam Kapalı R+ HD|15772|15|1200|C
+12/225 Büşonlu R+ HD|16380|16.5|1250|D6
+12/225 Tam Kapalı R+ HD|16550|16.5|1250|C
+12/240 Büşonlu R+ HD|17436|16.5|1400|D6
+12/240 Tam Kapalı R+ HD|17607|16.5|1400|C
+12/250 Büşonlu R+ HD|18829|16.5|1400|D6
+12/190 EFB R+ HD|17842|14|1100|B
+12/250 EFB R+ HD|21082|16.5|1400|C
+12/140 Marin-HD|12028|12|900|AT
+12/180 Marin-HD|15482|14|1100|BT
+12/225 Marin-HD|19162|15|1200|C
+12/62 Marin-HD|4926|5|550|L2
+12/85 Marin-HD|7002|6|620|N50
+12/90 Marin-HD|6674|8|720|N70
+12/115 Marin-HD|9015|10|800|GR31
+12/125 Marin-HD|9724|10|800|D3A
+12/145 Marin-HD|12229|12|950|AT
+12/150 Marin-HD-Tam Kapalı|12530|12|1000|BT
+12/180 Marin-HD-Tam Kapalı|14459|14|1100|BT
+12/185 Marin-HD|15787|14|1150|BT
+12/200 Marin-HD-Tam Kapalı|15482|15|1200|C
+12/230 Marin-HD|19358|16.5|1250|C`};
+const items=[];
+for(const k in D)D[k].split("\n").forEach(l=>{const f=l.split("|");let it={k};
+ if(k=="E"){it.name=f[0];it.ah=+f[0].match(/12\/\s*(\d+)/)[1];it.p=[+f[1]];it.dep=f[2];it.cca=f[3];it.box=f[4]}
+ else{it.name=f[0];it.ah=+f[1];const n=k=="V"?3:4;it.p=f.slice(2,2+n).map(Number);if(k=="V")it.code=f[5];
+  const c=f[0].match(/CCA:\s*(\d+)/);if(c)it.cca=c[1]}
+ const t=it.name.toUpperCase();it.cat=/AGM/.test(t)?"agm":/EFB/.test(t)?"efb":/MARİN|MARIN/.test(t)?"marin":"std";
+ it.main=it.p[B[k].m];it.h=(B[k].n+" "+it.name+" "+it.ah+"ah "+(it.code||"")+" "+(it.box||"")+" "+(it.cca||"")).toLocaleLowerCase("tr");items.push(it)});
+const C=[["all","Tümü"],["agm","AGM"],["efb","EFB"],["std","Standart"],["heavy","Ticari / Ağır Hizmet"],["marin","Marin"]];
+let brand="all",cat="all";
+const $=id=>document.getElementById(id),tl=v=>v.toLocaleString("tr-TR",{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2})+" ₺";
+function chips(el,list,get,set){el.innerHTML=list.map(([v,t])=>`<button data-v="${v}" class="${get()==v?"on":""}">${t}</button>`).join("");el.onclick=e=>{const b=e.target.closest("button");if(b){set(b.dataset.v);draw()}}}
+function draw(){
+ chips($("bb"),[["all","Tüm markalar"],["V","Varta"],["P","Powergen"],["E","Esan"]],()=>brand,v=>brand=v);
+ chips($("cb"),C,()=>cat,v=>cat=v);
+ const q=$("q").value.toLocaleLowerCase("tr").trim().split(/\s+/).filter(Boolean),s=$("s").value;
+ let r=items.filter(i=>(brand=="all"||i.k==brand)&&(cat=="all"||(cat=="heavy"?i.ah>=120:i.cat==cat))&&q.every(w=>/^\d+(ah)?$/.test(w)?i.ah==parseInt(w):i.h.includes(w)));
+ r.sort((a,b)=>s=="ah"?a.ah-b.ah||a.main-b.main:s=="ahd"?b.ah-a.ah||a.main-b.main:s=="pr"?a.main-b.main:b.main-a.main);
+ $("n").textContent=r.length+" ürün listeleniyor";
+ $("g").innerHTML=r.length?r.map(i=>{const b=B[i.k],ct={agm:"AGM",efb:"EFB",marin:"Marin",std:"Standart"}[i.cat];
+  const tg=[`<span class="b">${b.n}</span>`,`<span>${ct}</span>`,i.cca?`<span>CCA ${i.cca}</span>`:"",i.box?`<span>Kutu ${i.box}</span>`:"",i.code?`<span>VAR.${i.code}</span>`:"",i.dep?`<span>Depozito ${i.dep} ₺</span>`:""].join("");
+  const pr=i.p.map((v,x)=>`<div class="${x==b.m?"m":""}"><small>${b.l[x]}</small><b>${tl(v)}</b></div>`).join("");
+  return `<article class="c" style="--bc:var(--${i.k})"><div class="t"><div class="ah"><b>${i.ah}</b><small>Ah</small></div><div><div class="nm">${i.name}</div><div class="tg">${tg}</div></div></div><div class="pr">${pr}</div></article>`}).join(""):'<div class="e">Sonuç yok. Aramayı kısaltın veya filtreleri “Tümü” yapın.</div>'}
+$("q").oninput=draw;$("s").onchange=draw;draw();
+</script></body></html>
